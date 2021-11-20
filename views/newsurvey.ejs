@@ -27,7 +27,7 @@
             <div class="row border border-2 rounded mb-3 pb-2 pt-2" style="background-color: rgba(231, 45, 20, 0.418);">
                 <div class="form-floating border-2 rounded">
                     <textarea class="form-control" required placeholder="Name of the survey"
-                        name="surveytitle"></textarea>
+                        name="surveytitle" ><% if(locals.nameOfSurvey){ %> <%= nameOfSurvey %> <% } %></textarea>
                     <label for="floatingTextarea">&nbsp;&nbsp;Name of the Survey?</label>
                 </div>
 
@@ -49,14 +49,14 @@
                     <div class="row mb-1 w-100">
                         <div class="col">
                             <div class="input-group mb-1">
-                                <span class="input-group-text">#1</span>
+                                <span class="input-group-text">A</span>
                                 <textarea type="text" rows="1" required name="que<%= i %>option1"
                                     class="form-control"></textarea>
                             </div>
                         </div>
                         <div class="col">
                             <div class="input-group mb-1">
-                                <span class="input-group-text">#2</span>
+                                <span class="input-group-text">B</span>
                                 <textarea type="text" rows="1" required name="que<%= i %>option2"
                                     class="form-control"></textarea>
                             </div>
@@ -67,14 +67,14 @@
                     <div class="row mb-2 w-100">
                         <div class="col">
                             <div class="input-group mb-1">
-                                <span class="input-group-text">#3</span>
+                                <span class="input-group-text">C</span>
                                 <textarea type="text" rows="1" required name="que<%= i %>option3"
                                     class="form-control"></textarea>
                             </div>
                         </div>
                         <div class="col">
                             <div class="input-group mb-1">
-                                <span class="input-group-text">#4</span>
+                                <span class="input-group-text">D</span>
                                 <textarea type="text" rows="1" required name="que<%= i %>option4"
                                     class="form-control"></textarea>
                             </div>

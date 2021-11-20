@@ -171,9 +171,16 @@ box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
     max-height: 340px;
     height: 340px;
   }
+  .surveyansform {
+    max-width: 680px;
+  }
 }
 .createsurveybanner {
   height: auto;
+}
+
+.surveyansform {
+  max-width: 100%;
 }
 
 .bg-design {
@@ -181,5 +188,18 @@ box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
+  background-attachment: fixed;
   height: 100%;
+}
+
+.queno {
+  background-color: black; 
+  width: auto; 
+  color: white; 
+  padding: 5px;
+}
+
+.radiogrp label {
+  font-weight: 600;
+  color: black;
 }

@@ -64,7 +64,8 @@
                             </div> -->
 
             <% if (locals.result){ %>
-                <a href="/createSurvey/5" class="col-md-4 mb-4 createsurveybanner" style="text-decoration: none;">
+                <div data-bs-toggle="modal" data-bs-target="#exampleModal" class="col-md-4 mb-4 createsurveybanner"
+                    style="text-decoration: none;">
                     <div class="card p-3 mb-2 createsurveybanner" style="background-color: rgba(255, 248, 220, 0.87);">
                         <div class="d-flex justify-content-between">
                             <div class="d-flex flex-row align-items-center">
@@ -81,13 +82,13 @@
 
                         </div>
                     </div>
-                </a>
+                </div>
                 <% var i=0 %>
                     <% result.forEach(result=> { %>
                         <% i++ %>
                             <% const date=new Date(result.date);%>
                                 <div onclick="location.href='/about/<%= result._id %>';" class="col-md-4 mb-4">
-                                    <div class="card p-3 mb-2">
+                                    <div class="card p-3 mb-2" style="background-color: rgba(255, 248, 220, 0.788);">
                                         <div class="d-flex justify-content-between">
                                             <div class="d-flex flex-row align-items-center">
                                                 <div class="icon"> </div>
@@ -101,10 +102,18 @@
                                             <div class="badge"> <span>Survey</span> </div>
                                         </div>
                                         <div class="mt-3">
-                                            <a href="/underconstruction" style="text-decoration: none;" type="button"
-                                                class="btn btn-outline-primary mr-1">Update</a>
-                                            <a href="/delete/<%= result._id %>" style="text-decoration: none;"
-                                                type="button" class="btn btn-outline-danger">Delete</a>
+                                            <input style="display: none;" type="text" value="http://codefactorysurvey.herokuapp.com/<%=
+                                            result.slug %>" id="sample<%= i %>">
+                                                <a href="javascript:void(0);" onclick="CopyToClipboard('sample<%= i %>'); func(0); return true;"
+                                                    style="text-decoration: none;" type="button"
+                                                    class="btn btn-outline-success mr-1">Copy Survey Link</a>
+                                                
+                                                    <a href="/underconstruction" style="text-decoration: none;"
+                                                    type="button" class="btn btn-outline-primary mr-1">Update</a>
+                                                <a href="/delete/<%= result._id %>"
+                                                    onclick="return confirm('Are you sure?');"
+                                                    style="text-decoration: none;" type="button"
+                                                    class="btn btn-outline-danger">Delete</a>
 
                                         </div>
                                         <div class="mt-5">
@@ -115,17 +124,16 @@
                                                 <div class="progress">
                                                     <% const random=Math.floor((Math.random() * 100) + 1); %>
 
-                                                        <div class="progress-bar" role="progressbar"
-                                                        id="<%= i %>id"
+                                                        <div class="progress-bar" role="progressbar" id="<%= i %>id"
                                                             aria-valuenow="<%= random %>" aria-valuemin="0"
                                                             aria-valuemax="100"></div>
-                                                            <script>
-                                                                document.getElementById("<%= i %>id").style.width = "<%= random %>%";
+                                                        <script>
+                                                            document.getElementById("<%= i %>id").style.width = "<%= random %>%";
 
-                                                            </script>
+                                                        </script>
 
                                                 </div>
-                                                <div class="mt-3"> <span class="text1">32 people <span
+                                                <div class="mt-3"> <span class="text1"><%= result.totalsubmissions %> people <span
                                                             class="text2">submitted the
                                                             survey
                                                         </span></span> </div>
@@ -147,8 +155,8 @@
                                                 <p class="mb-0">
 
                                                 <div class="d-grid gap-2">
-                                                    <a href="/createSurvey/5" class="btn btn-warning"
-                                                        type="button">Click here</a>
+                                                    <a class="btn btn-warning" type="button" data-bs-toggle="modal"
+                                                        data-bs-target="#exampleModal">Click here</a>
                                                 </div>
 
                                                 </p>
@@ -158,6 +166,71 @@
 
 
 
+
+
+                                            <!-- Modal -->
+
+
+
+                                            <div class="modal fade" id="exampleModal" tabindex="-1"
+                                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered">
+                                                    <div class="modal-content"
+                                                        style="background-color:rgba(255, 248, 220, 0.788);">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Create Survey
+                                                            </h5>
+                                                            <button type="button" class="btn-close"
+                                                                data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <form method="post" action="/createSurvey">
+                                                            <div class="modal-body">
+
+                                                                <div class="mb-3">
+                                                                    <label for="surveyname" class="col-form-label">Name
+                                                                        of
+                                                                        the Survey:</label>
+                                                                    <textarea required type="text" class="form-control"
+                                                                        id="surveyname" name="survey-name"></textarea>
+                                                                </div>
+                                                                <div class="mb-3">
+                                                                    <label for="surveynumber"
+                                                                        class="col-form-label">Number
+                                                                        of Survey Questions:</label>
+                                                                    <input required type="number" class="form-control"
+                                                                        id="surveynumber" name="survey-number">
+                                                                </div>
+
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary"
+                                                                    data-bs-dismiss="modal">Close</button>
+                                                                <button type="submit" class="btn btn-primary">Create
+                                                                    Survey
+                                                                </button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <script>
+                                                function CopyToClipboard(id) {
+                                                    /* Get the text field */
+                                                    var copyText = document.getElementById(id);
+
+                                                    /* Select the text field */
+                                                    copyText.select();
+                                                    copyText.setSelectionRange(0, 99999); /* For mobile devices */
+
+                                                    /* Copy the text inside the text field */
+                                                    navigator.clipboard.writeText(copyText.value);
+
+                                                    /* Alert the copied text */
+                                                    alert("Copied the survey link: " + copyText.value);
+                                                }
+                                            </script>
 
         </div>
 
