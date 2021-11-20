@@ -16,67 +16,56 @@
     </title>
 </head>
 
-<body style="background-color: #c19242;">
+<body style="background-color: #c19242; height: 100vh;" class="bg-design">
 
 
-    <div>
+    <div style="margin-top: 0;">
 
-        <a class="menu-toggle rounded" href="#"><i class="fas fa-bars"></i></a>
-        <nav id="sidebar-wrapper">
-
-            <div class="d-flex flex-column flex-shrink-0 p-3"
-                style="background-color: rgba(255, 248, 220, 0.87); width: 250px; height: 100vh;">
-                <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
-                    <img class="bi me-2 mt-1" width="40" height="32" src="/images/CodeFactory.png">
-                    </img>
-                    <span class="sidenav-txt fs-4 pt-3">Survey</span>
-                </a>
-                <hr>
-                <ul class="nav nav-pills flex-column mb-auto">
-                    <li class="nav-item">
-                        <a href="/" class="nav-link link-dark" aria-current="page">
-                            <i class="bi me-2 fas fa-home" width="16" height="16"></i>
-                            Home
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/dashboard" class="nav-link active">
-                            <i class="bi me-2 fab fa-windows" width="16" height="16"></i>
-                            Dashboard
-                        </a>
-                    </li>
-                </ul>
-                <hr>
-                <!-- <div class="dropdown">
-                    <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle"
-                        id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
-                        <strong>mdo</strong>
-                    </a>
-                    <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
-                        <li><a class="dropdown-item" href="#">New project...</a></li>
-                        <li><a class="dropdown-item" href="#">Settings</a></li>
-                        <li><a class="dropdown-item" href="#">Profile</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="#">Sign out</a></li>
-                    </ul>
-                </div> -->
-            </div>
-        </nav>
+        <%- include('partials/navbar'); %>
 
     </div>
 
-    <div>
+    <div style="padding-top: 5.1rem;" class="container">
 
 
-        <div class="container d-flex align-items-center mt-0 mb-0" style="margin-top: 30px;">
+        <div class="row">
 
-            <div class="row pt-9 mt-5">
 
-                <a href="/createSurvey" class="col-md-4 mb-4" style="text-decoration: none; min-height: 342px;">
-                    <div class="card p-3 mb-2" style="min-height: 342px; background-color: rgba(255, 248, 220, 0.87);">
+            <!-- 
+                            <div class="col-md-4 mb-4">
+                                <div class="card p-3 mb-2">
+                                    <div class="d-flex justify-content-between">
+                                        <div class="d-flex flex-row align-items-center">
+                                            <div class="icon"> </div>
+                                            <div class="ms-2 c-details">
+                                                <h6 class="mb-0">Centennial Survey</h6> <span>1 days ago</span>
+                                            </div>
+                                        </div>
+                                        <div class="badge"> <span>Survey</span> </div>
+                                    </div>
+                                    <div class="mt-3">
+                                        <a href="/underconstruction" style="text-decoration: none;" type="button" class="btn btn-outline-primary mr-1">Update</a>
+                                        <a href="/underconstruction" style="text-decoration: none;" type="button" class="btn btn-outline-danger">Delete</a>
+            
+                                    </div>
+                                    <div class="mt-5">
+                                        <h3 class="heading">Professor Feedback Survey</h3>
+                                        <div class="mt-5">
+                                            <div class="progress">
+                                                <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50"
+                                                    aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                            <div class="mt-3"> <span class="text1">32 people <span class="text2">submitted the
+                                                        survey
+                                                    </span></span> </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> -->
+
+            <% if (locals.result){ %>
+                <a href="/createSurvey/5" class="col-md-4 mb-4 createsurveybanner" style="text-decoration: none;">
+                    <div class="card p-3 mb-2 createsurveybanner" style="background-color: rgba(255, 248, 220, 0.87);">
                         <div class="d-flex justify-content-between">
                             <div class="d-flex flex-row align-items-center">
                                 <div class="icon"> </div>
@@ -87,234 +76,91 @@
                             <div class="badge"> <span>New</span> </div>
                         </div>
                         <div class="mt-5">
-                            <h3 style="font-size: 48px; font-weight: 900; font-family: 'Times New Roman', Times, serif;" class="heading">Create a new survey</h3>
-                            
+                            <h3 style="font-size: 48px; font-weight: 900; font-family: 'Times New Roman', Times, serif;"
+                                class="heading">Create a new survey</h3>
+
                         </div>
                     </div>
                 </a>
+                <% var i=0 %>
+                    <% result.forEach(result=> { %>
+                        <% i++ %>
+                            <% const date=new Date(result.date);%>
+                                <div onclick="location.href='/about/<%= result._id %>';" class="col-md-4 mb-4">
+                                    <div class="card p-3 mb-2">
+                                        <div class="d-flex justify-content-between">
+                                            <div class="d-flex flex-row align-items-center">
+                                                <div class="icon"> </div>
+                                                <div class="ms-2 c-details">
+                                                    <h6 class="mb-0">Survey #<%= i %>
+                                                    </h6> <span>
+                                                        <%= date.toDateString() %>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="badge"> <span>Survey</span> </div>
+                                        </div>
+                                        <div class="mt-3">
+                                            <a href="/underconstruction" style="text-decoration: none;" type="button"
+                                                class="btn btn-outline-primary mr-1">Update</a>
+                                            <a href="/delete/<%= result._id %>" style="text-decoration: none;"
+                                                type="button" class="btn btn-outline-danger">Delete</a>
 
-                <div class="col-md-4 mb-4">
-                    <div class="card p-3 mb-2">
-                        <div class="d-flex justify-content-between">
-                            <div class="d-flex flex-row align-items-center">
-                                <div class="icon"> </div>
-                                <div class="ms-2 c-details">
-                                    <h6 class="mb-0">Centennial Survey</h6> <span>1 days ago</span>
+                                        </div>
+                                        <div class="mt-5">
+                                            <h3 class="heading">
+                                                <%= result.name %>
+                                            </h3>
+                                            <div class="mt-5">
+                                                <div class="progress">
+                                                    <% const random=Math.floor((Math.random() * 100) + 1); %>
+
+                                                        <div class="progress-bar" role="progressbar"
+                                                        id="<%= i %>id"
+                                                            aria-valuenow="<%= random %>" aria-valuemin="0"
+                                                            aria-valuemax="100"></div>
+                                                            <script>
+                                                                document.getElementById("<%= i %>id").style.width = "<%= random %>%";
+
+                                                            </script>
+
+                                                </div>
+                                                <div class="mt-3"> <span class="text1">32 people <span
+                                                            class="text2">submitted the
+                                                            survey
+                                                        </span></span> </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="badge"> <span>Survey</span> </div>
-                        </div>
-                        <div class="mt-3">
-                            <a href="/underconstruction" style="text-decoration: none;" type="button" class="btn btn-outline-primary mr-1">Update</a>
-                            <a href="/underconstruction" style="text-decoration: none;" type="button" class="btn btn-outline-danger">Delete</a>
+                                <% }); %>
 
-                        </div>
-                        <div class="mt-5">
-                            <h3 class="heading">Professor Feedback Survey</h3>
-                            <div class="mt-5">
-                                <div class="progress">
-                                    <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50"
-                                        aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                                <div class="mt-3"> <span class="text1">32 people <span class="text2">submitted the
-                                            survey
-                                        </span></span> </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                                    <% } else { %>
+                                        <div class="text-center" style="height: 100vh;">
+                                            <div class="alert alert-warning container text-center codeFactoryForm"
+                                                role="alert" style="align-items: center;">
+                                                <h4 class="alert-heading text-center">Get Started</h4>
+                                                <br>
+                                                <hr>
+                                                <p>Get Started by creating a new survey today!</p>
+                                                <hr>
+                                                <p class="mb-0">
 
-                <div class="col-md-4 mb-4">
-                    <div class="card p-3 mb-2">
-                        <div class="d-flex justify-content-between">
-                            <div class="d-flex flex-row align-items-center">
-                                <div class="icon"> </div>
-                                <div class="ms-2 c-details">
-                                    <h6 class="mb-0">Centennial Survey</h6> <span>1 days ago</span>
-                                </div>
-                            </div>
-                            <div class="badge"> <span>Survey</span> </div>
-                        </div>
-                        <div class="mt-3">
-                            <a href="/underconstruction" style="text-decoration: none;" type="button" class="btn btn-outline-primary mr-1">Update</a>
-                            <a href="/underconstruction" style="text-decoration: none;" type="button" class="btn btn-outline-danger">Delete</a>
+                                                <div class="d-grid gap-2">
+                                                    <a href="/createSurvey/5" class="btn btn-warning"
+                                                        type="button">Click here</a>
+                                                </div>
 
-                        </div>
-                        <div class="mt-5">
-                            <h3 class="heading">Professor Feedback Survey</h3>
-                            <div class="mt-5">
-                                <div class="progress">
-                                    <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50"
-                                        aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                                <div class="mt-3"> <span class="text1">32 people <span class="text2">submitted the
-                                            survey
-                                        </span></span> </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <% } %>
 
 
-                <div class="col-md-4 mb-4">
-                    <div class="card p-3 mb-2">
-                        <div class="d-flex justify-content-between">
-                            <div class="d-flex flex-row align-items-center">
-                                <div class="icon"> </div>
-                                <div class="ms-2 c-details">
-                                    <h6 class="mb-0">Centennial Survey</h6> <span>1 days ago</span>
-                                </div>
-                            </div>
-                            <div class="badge"> <span>Survey</span> </div>
-                        </div>
-                        <div class="mt-3">
-                            <a href="/underconstruction" style="text-decoration: none;" type="button" class="btn btn-outline-primary mr-1">Update</a>
-                            <a href="/underconstruction" style="text-decoration: none;" type="button" class="btn btn-outline-danger">Delete</a>
 
-                        </div>
-                        <div class="mt-5">
-                            <h3 class="heading">Professor Feedback Survey</h3>
-                            <div class="mt-5">
-                                <div class="progress">
-                                    <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50"
-                                        aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                                <div class="mt-3"> <span class="text1">32 people <span class="text2">submitted the
-                                            survey
-                                        </span></span> </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-4 mb-4">
-                    <div class="card p-3 mb-2">
-                        <div class="d-flex justify-content-between">
-                            <div class="d-flex flex-row align-items-center">
-                                <div class="icon"> </div>
-                                <div class="ms-2 c-details">
-                                    <h6 class="mb-0">Centennial Survey</h6> <span>1 days ago</span>
-                                </div>
-                            </div>
-                            <div class="badge"> <span>Survey</span> </div>
-                        </div>
-                        <div class="mt-3">
-                            <a href="/underconstruction" style="text-decoration: none;" type="button" class="btn btn-outline-primary mr-1">Update</a>
-                            <a href="/underconstruction" style="text-decoration: none;" type="button" class="btn btn-outline-danger">Delete</a>
-
-                        </div>
-                        <div class="mt-5">
-                            <h3 class="heading">Professor Feedback Survey</h3>
-                            <div class="mt-5">
-                                <div class="progress">
-                                    <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50"
-                                        aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                                <div class="mt-3"> <span class="text1">32 people <span class="text2">submitted the
-                                            survey
-                                        </span></span> </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-4 mb-4">
-                    <div class="card p-3 mb-2">
-                        <div class="d-flex justify-content-between">
-                            <div class="d-flex flex-row align-items-center">
-                                <div class="icon"> </div>
-                                <div class="ms-2 c-details">
-                                    <h6 class="mb-0">Centennial Survey</h6> <span>1 days ago</span>
-                                </div>
-                            </div>
-                            <div class="badge"> <span>Survey</span> </div>
-                        </div>
-                        <div class="mt-3">
-                            <a href="/underconstruction" style="text-decoration: none;" type="button" class="btn btn-outline-primary mr-1">Update</a>
-                            <a href="/underconstruction" style="text-decoration: none;" type="button" class="btn btn-outline-danger">Delete</a>
-
-                        </div>
-                        <div class="mt-5">
-                            <h3 class="heading">Professor Feedback Survey</h3>
-                            <div class="mt-5">
-                                <div class="progress">
-                                    <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50"
-                                        aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                                <div class="mt-3"> <span class="text1">32 people <span class="text2">submitted the
-                                            survey
-                                        </span></span> </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-4 mb-4">
-                    <div class="card p-3 mb-2">
-                        <div class="d-flex justify-content-between">
-                            <div class="d-flex flex-row align-items-center">
-                                <div class="icon"> </div>
-                                <div class="ms-2 c-details">
-                                    <h6 class="mb-0">Centennial Survey</h6> <span>1 days ago</span>
-                                </div>
-                            </div>
-                            <div class="badge"> <span>Survey</span> </div>
-                        </div>
-                        <div class="mt-3">
-                            <a href="/underconstruction" style="text-decoration: none;" type="button" class="btn btn-outline-primary mr-1">Update</a>
-                            <a href="/underconstruction" style="text-decoration: none;" type="button" class="btn btn-outline-danger">Delete</a>
-
-                        </div>
-                        <div class="mt-5">
-                            <h3 class="heading">Professor Feedback Survey</h3>
-                            <div class="mt-5">
-                                <div class="progress">
-                                    <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50"
-                                        aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                                <div class="mt-3"> <span class="text1">32 people <span class="text2">submitted the
-                                            survey
-                                        </span></span> </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-4 mb-4">
-                    <div class="card p-3 mb-2">
-                        <div class="d-flex justify-content-between">
-                            <div class="d-flex flex-row align-items-center">
-                                <div class="icon"> </div>
-                                <div class="ms-2 c-details">
-                                    <h6 class="mb-0">Centennial Survey</h6> <span>1 days ago</span>
-                                </div>
-                            </div>
-                            <div class="badge"> <span>Survey</span> </div>
-                        </div>
-                        <div class="mt-3">
-                            <a href="/underconstruction" style="text-decoration: none;" type="button" class="btn btn-outline-primary mr-1">Update</a>
-                            <a href="/underconstruction" style="text-decoration: none;" type="button" class="btn btn-outline-danger">Delete</a>
-
-                        </div>
-                        <div class="mt-5">
-                            <h3 class="heading">Professor Feedback Survey</h3>
-                            <div class="mt-5">
-                                <div class="progress">
-                                    <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50"
-                                        aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                                <div class="mt-3"> <span class="text1">32 people <span class="text2">submitted the
-                                            survey
-                                        </span></span> </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-            </div>
 
         </div>
+
     </div>
 
 

@@ -18,56 +18,15 @@
 
 <body>
 
-  <!-- Navigation-->
-  <a class="menu-toggle rounded" href="#"><i class="fas fa-bars"></i></a>
-  <nav id="sidebar-wrapper">
+  <%- include('partials/navbar'); %>
 
-    <div class="d-flex flex-column flex-shrink-0 p-3" style="background-color: rgba(255, 248, 220, 0.87); width: 250px; height: 100vh;">
-      <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
-        <img class="bi me-2 mt-1" width="40" height="32" src="/images/CodeFactory.png">
-      </img>
-        <span class="sidenav-txt fs-4 pt-3">Survey</span>
-      </a>
-      <hr>
-      <ul class="nav nav-pills flex-column mb-auto">
-        <li class="nav-item">
-            <a href="/" class="nav-link active" aria-current="page">
-                <i class="bi me-2 fas fa-home" width="16" height="16"></i>
-                Home
-            </a>
-        </li>
-        <li>
-            <a href="/dashboard" class="nav-link link-dark">
-                <i class="bi me-2 fab fa-windows" width="16" height="16"></i>
-                Dashboard
-            </a>
-        </li>
-    </ul>
-      <hr>
-      <!-- <div class="dropdown">
-        <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle" id="dropdownUser2"
-          data-bs-toggle="dropdown" aria-expanded="false">
-          <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
-          <strong>mdo</strong>
-        </a>
-        <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
-          <li><a class="dropdown-item" href="#">New project...</a></li>
-          <li><a class="dropdown-item" href="#">Settings</a></li>
-          <li><a class="dropdown-item" href="#">Profile</a></li>
-          <li>
-            <hr class="dropdown-divider">
-          </li>
-          <li><a class="dropdown-item" href="#">Sign out</a></li>
-        </ul>
-      </div> -->
-    </div>
-  </nav>
+ 
 
   <div class="masthead d-flex align-items-center">
     <div class="container px-4 px-lg-5 text-center">
       <h1 class="mb-2">CodeFactory Survey</h1>
       <h3 class="mb-5"><em>A powerful free online survey solution</em></h3>
-      <a class="btn btn-primary btn-xl" href="/dashboard">Let's get started</a>
+      <a class="btn btn-primary btn-xl" href="/users/register">Let's get started</a>
     </div>
   </div>
 
