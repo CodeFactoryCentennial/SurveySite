@@ -33,7 +33,7 @@ router.get('/createSurvey/:questions', isAuthenticated, function (req, res, next
 });
 
 router.get('/createSurvey/:questions/:title', isAuthenticated, function (req, res, next) {
-  res.render('newsurvey', { title: 'Create a new Survey', nameOfSurvey: req.params.title, numberOfQue: (Number(req.params.questions) + 1) })
+  res.render('newsurvey', { title: 'Create a new Survey', nameOfSurvey: String(req.params.title), numberOfQue: (Number(req.params.questions) + 1) })
 });
 
 
@@ -65,7 +65,7 @@ router.post('/createSurvey/:questions', function (req, res, next) {
   };
 
   const newSurvey = new Survey({
-    name: req.body.surveytitle,
+    name: String(req.body.surveytitle).substring(1),
     userid: req.user._id,
     useremail: req.user.email,
     questions: surveyquestions,
@@ -96,12 +96,13 @@ function convertToSlug(Text) {
     .replace(/-+$/, "");
 }
 
-router.get('/about/:id', isAuthenticated, function (req, res, next) {
+router.get('/about/:id', function (req, res, next) {
   Survey.findById(req.params.id)
     .then(data => {
-      if (data) {
-        console.log(req.user.email == data.useremail);
-        if (req.user.email == data.useremail) {
+      if (data != null) {
+        // console.log(req.user.email == data.useremail);
+        // if (req.user.email == data.useremail) {
+        if (true) {
           var noOfQues = 0;
           for (noOfQues; noOfQues < data.questions.length; noOfQues++) {
 
@@ -111,6 +112,7 @@ router.get('/about/:id', isAuthenticated, function (req, res, next) {
         }
         else {
           res.redirect('/dashboard');
+
         }
       } else {
         res.redirect('/dashboard');
