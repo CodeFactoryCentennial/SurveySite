@@ -96,7 +96,7 @@ function convertToSlug(Text) {
     .replace(/-+$/, "");
 }
 
-router.get('/about/:id', function (req, res, next) {
+router.get('/about/:id', isAuthenticated ,function (req, res, next) {
   Survey.findById(req.params.id)
     .then(data => {
       if (data != null) {
