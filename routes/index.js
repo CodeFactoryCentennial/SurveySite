@@ -36,7 +36,6 @@ router.get('/createSurvey/:questions/:title', isAuthenticated, function (req, re
   res.render('newsurvey', { title: 'Create a new Survey', nameOfSurvey: String(req.params.title), numberOfQue: (Number(req.params.questions) + 1) })
 });
 
-
 router.post('/createSurvey/:questions', function (req, res, next) {
 
   const surveyquestions = [];
@@ -96,13 +95,13 @@ function convertToSlug(Text) {
     .replace(/-+$/, "");
 }
 
-router.get('/about/:id', isAuthenticated ,function (req, res, next) {
+router.get('/about/:id', isAuthenticated, function (req, res, next) {
   Survey.findById(req.params.id)
     .then(data => {
       if (data != null) {
         // console.log(req.user.email == data.useremail);
         // if (req.user.email == data.useremail) {
-        if (true) {
+        if (req.user.email == data.useremail) {
           var noOfQues = 0;
           for (noOfQues; noOfQues < data.questions.length; noOfQues++) {
 
@@ -121,6 +120,64 @@ router.get('/about/:id', isAuthenticated ,function (req, res, next) {
     .catch(err => {
       res.redirect('/dashboard');
     });
+});
+
+router.get('/update/:id',isAuthenticated, function (req, res, next) {
+  Survey.findById(req.params.id)
+    .then(data => {
+      if (data != null) {
+        // console.log(req.user.email == data.useremail);
+        // if (req.user.email == data.useremail) {
+        if (req.user.email == data.useremail) {
+          var noOfQues = 0;
+          for (noOfQues; noOfQues < data.questions.length; noOfQues++) {
+
+          }
+
+          const date = new Date(data.date);
+          res.render('editsurvey', { surveyData: data, islogged: true, noOfQues, date });
+        }
+        else {
+          res.redirect('/dashboard');
+
+        }
+      } else {
+        res.redirect('/dashboard');
+      }
+    })
+    .catch(err => {
+      res.redirect('/dashboard');
+    });
+});
+
+router.post('/update/:id/:questions', function (req, res, next) {
+  const surveyquestions = [];
+  for (var i = 1; i < Number(req.params.questions) + 1; i++) {
+    const question = req.body[`que${i}label`];
+    const options = [req.body[`que${i}option1`], req.body[`que${i}option2`], req.body[`que${i}option3`], req.body[`que${i}option4`]];
+    const questionarray = {
+      question: question,
+      options: options
+    }
+    surveyquestions.push(questionarray);
+
+
+  };
+
+  Survey.findByIdAndUpdate(req.params.id, {
+    name: req.body.surveytitle,
+    questions: surveyquestions,
+  }, (err, docs) => {
+    if (!err) {
+      res.redirect('/about/' + req.params.id);
+    } else {
+      res.send(err);
+    }
+  });
+});
+
+router.get('/github', function (req,res, next) {
+  res.redirect('https://github.com/CodeFactoryCentennial/SurveySite');
 });
 
 router.get('/delete/:id', isAuthenticated, function (req, res, next) {
@@ -147,47 +204,46 @@ router.get('/thankyou', function (req, res, next) {
   res.render('thankyou', { islogged: isLogged(req) });
 });
 
-
 router.post('/submitsurvey/:id', function (req, res, next) {
 
   Survey.findById(req.params.id, (err, data) => {
     const surveystatistics = [];
     for (var i = 1; i <= data.questions.length; i++) {
       var surveyans;
-      if (req.body[`que${i}answer`] == 0){
+      if (req.body[`que${i}answer`] == 0) {
         surveyans = {
-          0: data.statistics[i-1].stat[0] + 1,
-          1: data.statistics[i-1].stat[1],
-          2: data.statistics[i-1].stat[2],
-          3: data.statistics[i-1].stat[3],
+          0: data.statistics[i - 1].stat[0] + 1,
+          1: data.statistics[i - 1].stat[1],
+          2: data.statistics[i - 1].stat[2],
+          3: data.statistics[i - 1].stat[3],
         };
-      } else if (req.body[`que${i}answer`] == 1){
+      } else if (req.body[`que${i}answer`] == 1) {
         surveyans = {
-          0: data.statistics[i-1].stat[0],
-          1: data.statistics[i-1].stat[1] + 1,
-          2: data.statistics[i-1].stat[2],
-          3: data.statistics[i-1].stat[3],
+          0: data.statistics[i - 1].stat[0],
+          1: data.statistics[i - 1].stat[1] + 1,
+          2: data.statistics[i - 1].stat[2],
+          3: data.statistics[i - 1].stat[3],
         };
-      } else if (req.body[`que${i}answer`] == 2){
+      } else if (req.body[`que${i}answer`] == 2) {
         surveyans = {
-          0: data.statistics[i-1].stat[0],
-          1: data.statistics[i-1].stat[1],
-          2: data.statistics[i-1].stat[2] + 1,
-          3: data.statistics[i-1].stat[3],
+          0: data.statistics[i - 1].stat[0],
+          1: data.statistics[i - 1].stat[1],
+          2: data.statistics[i - 1].stat[2] + 1,
+          3: data.statistics[i - 1].stat[3],
         };
-      } else if (req.body[`que${i}answer`] == 3){
+      } else if (req.body[`que${i}answer`] == 3) {
         surveyans = {
-          0: data.statistics[i-1].stat[0],
-          1: data.statistics[i-1].stat[1],
-          2: data.statistics[i-1].stat[2],
-          3: data.statistics[i-1].stat[3] + 1,
+          0: data.statistics[i - 1].stat[0],
+          1: data.statistics[i - 1].stat[1],
+          2: data.statistics[i - 1].stat[2],
+          3: data.statistics[i - 1].stat[3] + 1,
         };
       };
-      
-     
+
+
 
       const surveystat = {
-        question: data.questions[i-1].question,
+        question: data.questions[i - 1].question,
         stat: surveyans
       };
       surveystatistics.push(surveystat);
@@ -201,7 +257,7 @@ router.post('/submitsurvey/:id', function (req, res, next) {
     }, (err, resp) => {
       if (!err) {
         res.redirect('/thankyou');
-      } else{
+      } else {
         res.send(err);
       }
     });
@@ -216,7 +272,6 @@ router.post('/submitsurvey/:id', function (req, res, next) {
 
 });
 
-
 router.get('/:slug', function (req, res, next) {
   Survey.findOne({ slug: req.params.slug }, function (err, data) {
     if (data == null) {
@@ -226,7 +281,6 @@ router.get('/:slug', function (req, res, next) {
     }
   });
 });
-
 
 function isAuthenticated(req, res, done) {
   if (req.user) {
