@@ -181,7 +181,7 @@ router.get('/github', function (req,res, next) {
 });
 
 router.get('/aboutproject', function (req,res, next) {
-  res.render('aboutproject',{ islogged: isLogged(req) });
+  res.render('aboutproject',{ islogged: isLogged(req) , activeproject: 'active'});
 });
 
 router.get('/delete/:id', isAuthenticated, function (req, res, next) {
