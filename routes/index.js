@@ -180,6 +180,10 @@ router.get('/github', function (req,res, next) {
   res.redirect('https://github.com/CodeFactoryCentennial/SurveySite');
 });
 
+router.get('/aboutproject', function (req,res, next) {
+  res.render('aboutproject',{ islogged: isLogged(req) });
+});
+
 router.get('/delete/:id', isAuthenticated, function (req, res, next) {
   Survey.findByIdAndRemove(req.params.id, function (err, docs) {
     if (err) {
